@@ -1,0 +1,239 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package LGL.shortReads;
+
+import LGL.data.REGION;
+import LGL.dataConcise.RegionConcise;
+import LGL.util.SeqUtil;
+
+import java.io.*;
+import java.util.*;
+
+/**
+ *
+ * To keep the order of the regions in the input file, data structure REGION is
+ * used To increase the search efficiency, the REGIONs are converted to
+ * REGIONconcise
+ *
+ * @author ligl
+ */
+public class TagCountInGivenRegions {
+
+    int debugLevel = 4;
+    Calendar rightNow = Calendar.getInstance();
+    Vector<REGION> regions = null;
+    Hashtable<RegionConcise, REGION> hashRegionConcise2Region = new Hashtable<RegionConcise, REGION>();
+    Hashtable<String, Integer> hashChrom2maxRegionSpans = new Hashtable<String, Integer>();
+    Hashtable<String, ArrayList<RegionConcise>> hashChrom2regionConcise = new Hashtable<String, ArrayList<RegionConcise>>();
+    Hashtable<REGION, Integer> hashRegion2tagCount = new Hashtable<REGION, Integer>();
+    int extensionLength = 200;
+    int extensionMode = 1;
+    int minOverlapSize = 1;
+
+    public TagCountInGivenRegions(String tagFile, String regionFile, String outputFile, int extensionLength, int extensionMode) throws IOException {
+        rightNow = Calendar.getInstance();
+        System.out.println("[" + rightNow.getTime().toString() + "] start TagCountInGivenRegions ... ");
+        this.extensionLength = extensionLength;
+        this.extensionMode = extensionMode;
+        // load regions
+        //regions = REGION.load(regionFile);
+        //delete same in vector by momo
+        regions = REGION.load(outputFile+"validunique.anchor");
+        
+        // convert regions to regionConcise
+        // and the hashmap to the regions
+        generateRegionConciseHash(regions, hashChrom2regionConcise, hashChrom2maxRegionSpans, hashRegionConcise2Region);
+        // generate the tag counts for each region: the number of tags in the regions
+        generateTagCount(tagFile);
+        // output the region clusters
+        outputRegionTagCount(regionFile, outputFile);
+    }
+    
+    public static void generateRegionConciseHash(Vector<REGION> regions, Hashtable<String, ArrayList<RegionConcise>> hashChrom2regionConcise,
+    		Hashtable<String, Integer> hashChrom2maxRegionSpans, Hashtable<RegionConcise, REGION> hashRegionConcise2Region) {
+        //hashChrom2regionConcise = new Hashtable<String, ArrayList<RegionConcise>>();
+
+        for (REGION region : regions) {
+            updateChrom2regionConciseHash(region, hashChrom2regionConcise, hashRegionConcise2Region);
+        }
+
+        for (String chrom : hashChrom2regionConcise.keySet()) {
+            // sort concise regions
+            ArrayList<RegionConcise> regionConciseList = hashChrom2regionConcise.get(chrom);
+            Collections.sort(regionConciseList);
+
+            // get the max region span for each chromosome
+            int maxRegionSpan = Integer.MIN_VALUE;
+            for (RegionConcise region : regionConciseList) {
+                int regionSpan = region.getSpan();
+                if (maxRegionSpan < regionSpan) {
+                    maxRegionSpan = regionSpan;
+                }
+            }
+            hashChrom2maxRegionSpans.put(chrom, new Integer(maxRegionSpan));
+        }
+    }
+
+    public static void updateChrom2regionConciseHash(REGION region, Hashtable<String, ArrayList<RegionConcise>> hashChrom2regionConcise,
+    		Hashtable<RegionConcise, REGION> hashRegionConcise2Region) {
+        String chrom = region.getChrom();
+        ArrayList<RegionConcise> regionList = hashChrom2regionConcise.get(chrom);
+        if (regionList == null) {
+            regionList = new ArrayList<RegionConcise>();
+            hashChrom2regionConcise.put(chrom, regionList);
+        }
+        RegionConcise regionConcise = new RegionConcise(region.getStart(), region.getEnd());
+        regionList.add(regionConcise);
+
+        hashRegionConcise2Region.put(regionConcise, region);
+    }
+
+    public static void main(String[] args) throws IOException {
+        if (args.length == 5) {
+            new TagCountInGivenRegions(args[0], args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+        } else {
+            System.out.println("Usage: java TagCountInGivenRegions <input_aln_file> <region_file> <output_file> <extensionLength> <extensionMode>");
+            // huang
+            // System.out.println("       <extensionMode>: 1 - from 5' to 3';  2 - in both directions");
+            System.out.println("       <extensionMode>: 1 - from 3' to 5';  2 - in both directions");
+            System.exit(1);
+        }
+    }
+
+    void outputRegionTagCount(String inFile, String outputFile) throws IOException {
+
+        BufferedReader fileIn = new BufferedReader(new InputStreamReader(new FileInputStream(new File(inFile))));
+        PrintWriter fileOut1 = new PrintWriter(new BufferedWriter(new FileWriter(outputFile+"anchor1.tagCount.txt", false)));
+        PrintWriter fileOut2 = new PrintWriter(new BufferedWriter(new FileWriter(outputFile+"anchor2.tagCount.txt", false)));
+
+        System.out.println("SIZE of hashRegion2tagCount " + hashRegion2tagCount.size());
+
+        String line;
+        while ((line = fileIn.readLine()) != null) {
+            if (line.length() <= 0) {  // skip the short lines
+                continue;
+            }
+            String fields[] = line.split("\t");
+            REGION region = new REGION(fields[0], Integer.parseInt(fields[1]), Integer.parseInt(fields[2]));
+            if (fields.length >= 13) {
+                region.setAnnotation(fields[12]);
+            }
+            fileOut1.println(region.toString() + "\t" + region.getAnnotation() + "\t" + hashRegion2tagCount.get(region).intValue());
+
+            region = new REGION(fields[6], Integer.parseInt(fields[7]), Integer.parseInt(fields[8]));
+            if (fields.length >= 13) {
+                region.setAnnotation(fields[12]);
+            }
+            fileOut2.println(region.toString() + "\t" + region.getAnnotation() + "\t" + hashRegion2tagCount.get(region).intValue());
+
+
+        }
+        fileIn.close();
+
+        fileOut1.close();
+        fileOut2.close();
+    }
+
+    void outputRegionTagCount(String outputFile) throws IOException {
+        PrintWriter fileOut = new PrintWriter(new BufferedWriter(new FileWriter(outputFile, false)));
+
+        for (int i = 0; i < regions.size(); i++) {
+            fileOut.println(regions.elementAt(i).toString() + "\t" + regions.elementAt(i).getAnnotation() + "\t" + hashRegion2tagCount.get(regions.elementAt(i)).intValue());
+        }
+
+        fileOut.close();
+    }
+
+    void generateTagCount(String tagFile) throws IOException {
+
+        hashRegion2tagCount.clear();
+        for (REGION region : regions) {
+            hashRegion2tagCount.put(region, new Integer(0));
+        }
+
+        BufferedReader fileIn = new BufferedReader(new InputStreamReader(new FileInputStream(new File(tagFile))));
+        String line;
+        long processN = 0;
+        while ((line = fileIn.readLine()) != null) {
+            if (line.length() <= 0) {  // skip the short lines
+                continue;
+            }
+            String fields[] = line.split("\t");
+            updateTagCount(fields[0], Integer.parseInt(fields[1]), fields[2].charAt(0));
+            processN++;
+            if(processN%10000000 == 0) {
+            	System.out.println("Porcessed " + processN/10000000 + "0 M tags...");
+            }
+        }
+        fileIn.close();
+    }
+
+    void updateTagCount(String chrom, int loci, char strand) {
+        ArrayList regionConciseList = hashChrom2regionConcise.get(chrom);
+        if (regionConciseList == null) {
+            return;
+        }
+        int start = 0, end = 0;
+        if (this.extensionMode == 2) { // extension in both directions
+            start = loci - this.extensionLength;
+            end = loci + this.extensionLength;
+        } else if (this.extensionMode == 1) {  // extension from 3' to 5'
+        	if (SeqUtil.isForwardStrand(strand) == true) {
+                start = loci - this.extensionLength;
+                end = loci;
+            } else {
+                start = loci;
+                end = loci + this.extensionLength;
+            }
+        } else if (this.extensionMode == 0) {  // extension
+                start = loci;
+                end = loci + this.extensionLength;
+        }
+
+//        else { // extension from 5' to 3'
+//            if (SeqUtil.isForwardStrand(strand) == true) {
+//                start = loci;
+//                end = loci + this.extensionLength;
+//            } else {
+//                start = loci - this.extensionLength;
+//                end = loci;
+//            }
+//        }
+        RegionConcise regionConcise = new RegionConcise(start, end);
+
+        int index = Collections.binarySearch(regionConciseList, regionConcise);
+        if (index < 0) {
+            index = -index - 1;
+        }
+        if (index >= regionConciseList.size()) {
+            index = regionConciseList.size() - 1;
+        }
+
+        if (regionConcise.overlappedSize(((ArrayList<RegionConcise>) regionConciseList).get(index)) >= minOverlapSize) {
+            updateTagCount(((ArrayList<RegionConcise>) regionConciseList).get(index));
+        }
+
+        for (int iRegion = index - 1; iRegion >= 0; iRegion--) {
+            if (start - ((ArrayList<RegionConcise>) regionConciseList).get(iRegion).getStart() > hashChrom2maxRegionSpans.get(chrom).intValue()) {
+                break;
+            }
+            if (regionConcise.overlappedSize(((ArrayList<RegionConcise>) regionConciseList).get(iRegion)) >= minOverlapSize) {
+                updateTagCount(((ArrayList<RegionConcise>) regionConciseList).get(iRegion));
+            }
+        }
+        for (int iRegion = index + 1; iRegion < regionConciseList.size(); iRegion++) {
+            if (regionConcise.overlappedSize(((ArrayList<RegionConcise>) regionConciseList).get(iRegion)) >= minOverlapSize) {
+                updateTagCount(((ArrayList<RegionConcise>) regionConciseList).get(iRegion));
+            } else {
+                break;
+            }
+        }
+    }
+
+    void updateTagCount(RegionConcise regionConcise) {
+        REGION region = hashRegionConcise2Region.get(regionConcise);
+        hashRegion2tagCount.put(region, new Integer(hashRegion2tagCount.get(region).intValue() + 1));
+    }
+}
