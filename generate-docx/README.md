@@ -18,20 +18,38 @@ Their suffixes should be:
 
 respectively. All these files need to be in the PPL output directory. Such as:
 <p>
-./GSM6284587_800k.fq/  <br>
-├── GSM6284587_800k.fq.basic_statistics.txt  <br>
-├── GSM6284587_800k.fq.bc   <br>
-├── GSM6284587_800k.fq.bc.evenByChr<br>
-├── GSM6284587_800k.fq.contacts<br>
-├── GSM6284587_800k.fq.dd<br>
-├── GSM6284587_800k.fq.ii<br>
-└── GSM6284587_800k.fq.penalty.distribution<br>
+./prefix/  <br>
+├── prefix.basic_statistics.txt  <br>
+├── prefix.bc   <br>
+├── prefix.bc.evenByChr<br>
+├── prefix.contacts<br>
+├── prefix.dd<br>
+├── prefix.ii<br>
+└── prefix.penalty.distribution<br>
 </p>
 
 The illustration for these functions can be checked on PPL. If you don't want to know it, you just use the code below to generate all information file:
 
+    prefix="test01"
 
-## Install this module
+    #generate .dd
+    java -cp PPL.jar utils.StatDimensionDistribution $prefix/$prefix.contacts $prefix/$prefix.dd
+    #generate .bc .bc.evenByChr
+    java -cp PPL.jar utils.BoundaryCheck $prefix/$prefix.contacts $prefix/$prefix.bc
+    $generate .ii
+    java -cp PPL.jar utils.StatIntraInter $prefix/$prefix.contacts $prefix/$prefix.ii
+
+## Install
+Visulazition module is based on Python 3.8.  
+Just run `pip install -r requirements.txt`.
+Our test environment is on Windows Subsystem Linux Ubuntu.
+
+## Run
+    # generate figure (saved in directory "./figs")
+    bash plot_png.sh $output_dir $id
+    # generate docx file
+    python generate_report_docx.py 
+
 
 
 
