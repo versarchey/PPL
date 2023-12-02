@@ -46,9 +46,18 @@ Our test environment is on Windows Subsystem Linux Ubuntu.
 
 ## Run
     # generate figure (saved in directory "./figs")
-    bash plot_png.sh $output_dir $id
+    prefix="GSM6284587_800k.fq"
+    result_dir="./"
+    vf="dpnii.bed"
+    bash plot_png.sh  $prefix $result_dir $vf
+
     # generate docx file
-    python generate_report_docx.py 
+    python generate_report_docx.py \ 
+    -i test_data/SRR11589404_800k.fq/SRR11589404_800k.fq.basic_statistics.txt \ #basic stats info
+    -d ./figs \ #figs dir
+    -p SRR11589404_800k.fq \ #prefix 
+    -o SRR11589404_800k.fq.docx #outputfile name
+
 
 
 
