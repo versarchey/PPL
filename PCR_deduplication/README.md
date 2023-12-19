@@ -16,6 +16,7 @@
 
 ## Method
 To preserve the high-order concatemers as much as possible, only one contact, which can not be included by the others, would be remained. Our Method illustration is belowed.
+<img src="https://github.com/versarchey/PPL/blob/main/PCR_deduplication/figs/dedup_illustration.svg" width = "300" height = "200" alt="图片名称" align=center />
 ![image](https://github.com/versarchey/PPL/blob/main/PCR_deduplication/figs/dedup_illustration.svg)
 
 ## Visualization
