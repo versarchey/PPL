@@ -4,8 +4,10 @@
 ### Pipeline
 ![image](https://github.com/versarchey/PPL/blob/main/HaploTag/figs/haplotag.png)
 ### Imputation Methods
+Our implemented methods referto the Chen et.al researchers' work and results. \\
+
 ![image](https://github.com/versarchey/PPL/blob/main/HaploTag/figs/imputation.png)
-Our implemented methods referto the Chen et.al researchers' work and results.
+
 > Chen, Y., Lin, Z.-B., Wang, S.-K., Wu, B., Niu, L.-J., Zhong, J.-Y., Sun, Y.-M., Bai, X., Liu, L.-R., Xie, W., Luo, R., Hou, C., Luo, F., & Xiao, C.-L. (2023). High-resolution diploid 3D genome reconstruction using Pore-C data. bioRxiv, 2023.2008.2029.555243. https://doi.org/10.1101/2023.08.29.555243 
 
 
