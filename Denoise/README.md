@@ -28,7 +28,7 @@ There may be multiple reasons for this phenomenon. First, random linkage events 
 ## METHOD
 In order to filter the artifacts caused by random links and other factors, and to improve the quality of higher-order interaction results, we introduce the hypergraph filtering method.The implementation of hypergraph filtering in PPL is divided into two steps: the first is to decompose all the multiple interactions (hyper edges) into VPCs (normal edges), and make the VPCs matrix. Then, sort all the non-zero values in the matrix and obtain the 85% quantile as the filtering threshold. The 85% quantile of the matrix is used as the threshold value. VPCs below this threshold are considered unreliable, and their weights are changed to 0. Second, each hyperedge (concatemer) is decomposed into a fully connected graph in turn, and then, based on the neighbor matrix constructed in the first step, the edges with the value of 0 in the matrix are deleted to generate an intermediate graph. Finally, all the maximal connected subgraphs in the graph are identified using a depth-first traversal algorithm. All the nodes, i.e. genome segments, in each maximal connectivity subgraph are considered to be neighborable in the same space-time. By this method, the ultra-high-order interactions with the participation artifacts will be split into multiple interactions with higher confidence, which will serve as noise reduction. The use of the 85% quantile as the default threshold in the methodology references the findings of Doston et al. (Dotson et al., 2022). Since the method is designed to run at different resolutions, the tool can also function at higher resolutions, but the running time tends to increase in power with resolution.
 
-<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/pipeline.png" width = "30%" align=center />
+<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/pipeline.png" width = "50%" align=center />
 
 ## USAGE
     
@@ -37,7 +37,8 @@ In order to filter the artifacts caused by random links and other factors, and t
         #required
             <Input file: multi-contacts>
             <Output file: multi-contacts filtered>
-            <Chrom size file> <binSize, e.g. 1000000>
+            <Chrom size file> 
+            <Bin size, e.g. 1000000>
         #optional
             <Percentile cutoff, default:0.85> 
             <Range, e.g. chr1: 1000000-2000000>
@@ -61,13 +62,18 @@ In order to filter the artifacts caused by random links and other factors, and t
 
 ### Check inter-intra TAD ratio change
 
+To further evaluate the usefulness of multi-interaction noise reduction for subsequent analysis, we categorize VPCs into four interaction types based on whether the anchors at both ends of the VPCs are within the same TAD: within the same TAD (intra-TAD), across two inter-TADs (inter-TAD), with only one end within the TAD (TAD-N), and with both ends outside the TAD. A higher percentage of interactions within the TAD is generally considered to be an indication of better data quality. The results show a significant improvement in the proportion of intra-TAD types using the processed Pore-C VPCs (18% → 35%), and the overall proportion is closer to that of the gold-standard Hi-C dataset (about 33% of intra-TAD types).
+
 <img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/overlap_TAD.png" width = "50%" align=center />
 
 ### Target region check
 
-<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/filtered_region.png" width = "80%" align=center />
+Comparing the VPCs maps before and after noise reduction, it can be observed that the contrast of the maps after noise reduction becomes higher and presents a clearer background.
+
+<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/filtered_region.png" width = "90%" align=center />
 
 ### Correlation with high-quality Hi-C
 
-<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/correlation.png" width = "80%" align=center />
+However, the pearson correlation between the VPCs mapping and the high-quality Hi-C mapping did not change significantly before and after filtering, and both remained at a high level. We believe that this result is expected because the intervals targeted by noise reduction cannot perfectly match the difference intervals between the Hi-C and VPCs profiles.
 
+<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/correlation.png" width = "100%" align=center />
