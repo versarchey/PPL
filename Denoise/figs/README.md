@@ -3,7 +3,7 @@
 ## Why
 In our tests, we found that the percentage of VPCs in intra long-range and inter is significantly higher than in Hi-C and ChIA-PET in almost all the datasets of Pore-C and similar experiments published so far (Deshpande et al., 2022 ; Li et al., 2023 ; Zhong et al. al., 2023). In Hi-C data analysis, a high percentage of inter is often a reflection of poorer data quality (Lajoie et al., 2015).
 
-<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/compair_ratio.png" width = "300" align=center />
+<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/compair_ratio.png" width = "80%" align=center />
 
 Therefore, in order to trace the source of these long-range interactions to understand their formation, we made a sorted classification of GM12878 Hi-Pore-C interactions by order from low to high. The results show that the VPCs of inter type are mainly from ultra-high order interactions.
 
