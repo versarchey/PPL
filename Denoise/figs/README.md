@@ -3,7 +3,7 @@
 ## Why
 In our tests, we found that the percentage of VPCs in intra long-range and inter is significantly higher than in Hi-C and ChIA-PET in almost all the datasets of Pore-C and similar experiments published so far (Deshpande et al., 2022 ; Li et al., 2023 ; Zhong et al. al., 2023). In Hi-C data analysis, a high percentage of inter is often a reflection of poorer data quality (Lajoie et al., 2015).
 
-![image] (https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/compair_ratio.png)
+<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/Denoise/figs/compair_ratio.png" width = "300" align=center />
 
 Therefore, in order to trace the source of these long-range interactions to understand their formation, we made a sorted classification of GM12878 Hi-Pore-C interactions by order from low to high. The results show that the VPCs of inter type are mainly from ultra-high order interactions.
 
@@ -15,24 +15,12 @@ There may be multiple reasons for this phenomenon. First, random linkage events 
 
 ### Reference
 > Deshpande, A. S., Ulahannan, N., Pendleton, M., Dai, X., Ly, L., Behr, J. M., Schwenk, S., Liao, W., Augello, M. A., & Tyer, C. (2022). Identifying synergistic high-order 3D chromatin conformations from genome-scale nanopore concatemer sequencing. Nature Biotechnology, 1-12. 
-> Li, W., Lu, J., Lu, P., Gao, Y., Bai, Y., Chen, K., Su, X., Li, M., Liu, J. e., Chen, Y., Wen, L., & Tang, F. (2023). scNanoHi-C: a single-cell long-read concatemer sequencing method to reveal high-order chromatin structures within individual cells. Nature methods. https://doi.org/10.1038/s41592-023-01978-w
-        
-         
-> Zhong, J.-Y., Niu, L., Lin, Z.-B., Bai, X., Chen, Y., Luo, F., Hou, C., & Xiao, C.-L. (2023). High-throughput Pore-C reveals the single-allele topology and cell type-specificity of 3D genome folding. Nature communications, 14(1), 1250. https://doi.org/10.1038/s41467-023-36899-x
-        
-         
-> Rao, Suhas S. P., Huntley, Miriam H., Durand, Neva C., Stamenova, Elena K., Bochkov, Ivan D., Robinson, James T., Sanborn, Adrian L., Machol, I., Omer, Arina D., Lander, Eric S., & Aiden, Erez L. (2014). A 3D Map of the Human Genome at Kilobase Resolution Reveals Principles of Chromatin Looping. Cell, 159(7), 1665-1680. https://doi.org/10.1016/j.cell.2014.11.021
-        
-         
-> Li, G., Fullwood, M. J., Xu, H., Mulawadi, F. H., Velkov, S., Vega, V., Ariyaratne, P. N., Mohamed, Y. B., Ooi, H.-S., & Tennakoon, C. (2010). ChIA-PET tool for comprehensive chromatin interaction analysis with paired-end tag sequencing. Genome biology, 11(2), 1-13. https://genomebiology.biomedcentral.com/articles/10.1186/gb-2010-11-2-r22
-        
-         
-> Yu, S. C. Y., Deng, J., Qiao, R., Cheng, S. H., Peng, W., Lau, S. L., Choy, L. Y. L., Leung, T. Y., Wong, J., Wong, V. W.-S., Wong, G. L. H., Jiang, P., Chiu, R. W. K., Chan, K. C. A., & Lo, Y. M. D. (2022). Comparison of Single Molecule, Real-Time Sequencing and Nanopore Sequencing for Analysis of the Size, End-Motif, and Tissue-of-Origin of Long Cell-Free DNA in Plasma. Clinical Chemistry, 69(2), 168-179. https://doi.org/10.1093/clinchem/hvac180
-        
-         
-> Lajoie, B. R., Dekker, J., & Kaplan, N. (2015). The Hitchhiker’s guide to Hi-C analysis: Practical guidelines. Methods, 72, 65-75. https://doi.org/https://doi.org/10.1016/j.ymeth.2014.10.031
-        
-         
+> Li, W., Lu, J., Lu, P., Gao, Y., Bai, Y., Chen, K., Su, X., Li, M., Liu, J. e., Chen, Y., Wen, L., & Tang, F. (2023). scNanoHi-C: a single-cell long-read concatemer sequencing method to reveal high-order chromatin structures within individual cells. Nature methods. https://doi.org/10.1038/s41592-023-01978-w 
+> Zhong, J.-Y., Niu, L., Lin, Z.-B., Bai, X., Chen, Y., Luo, F., Hou, C., & Xiao, C.-L. (2023). High-throughput Pore-C reveals the single-allele topology and cell type-specificity of 3D genome folding. Nature communications, 14(1), 1250. https://doi.org/10.1038/s41467-023-36899-x 
+> Rao, Suhas S. P., Huntley, Miriam H., Durand, Neva C., Stamenova, Elena K., Bochkov, Ivan D., Robinson, James T., Sanborn, Adrian L., Machol, I., Omer, Arina D., Lander, Eric S., & Aiden, Erez L. (2014). A 3D Map of the Human Genome at Kilobase Resolution Reveals Principles of Chromatin Looping. Cell, 159(7), 1665-1680. https://doi.org/10.1016/j.cell.2014.11.021 
+> Li, G., Fullwood, M. J., Xu, H., Mulawadi, F. H., Velkov, S., Vega, V., Ariyaratne, P. N., Mohamed, Y. B., Ooi, H.-S., & Tennakoon, C. (2010). ChIA-PET tool for comprehensive chromatin interaction analysis with paired-end tag sequencing. Genome biology, 11(2), 1-13. https://genomebiology.biomedcentral.com/articles/10.1186/gb-2010-11-2-r22 
+> Yu, S. C. Y., Deng, J., Qiao, R., Cheng, S. H., Peng, W., Lau, S. L., Choy, L. Y. L., Leung, T. Y., Wong, J., Wong, V. W.-S., Wong, G. L. H., Jiang, P., Chiu, R. W. K., Chan, K. C. A., & Lo, Y. M. D. (2022). Comparison of Single Molecule, Real-Time Sequencing and Nanopore Sequencing for Analysis of the Size, End-Motif, and Tissue-of-Origin of Long Cell-Free DNA in Plasma. Clinical Chemistry, 69(2), 168-179. https://doi.org/10.1093/clinchem/hvac180 
+> Lajoie, B. R., Dekker, J., & Kaplan, N. (2015). The Hitchhiker’s guide to Hi-C analysis: Practical guidelines. Methods, 72, 65-75. https://doi.org/https://doi.org/10.1016/j.ymeth.2014.10.031 
 > Dotson, G. A., Chen, C., Lindsly, S., Cicalo, A., Dilworth, S., Ryan, C., Jeyarajan, S., Meixner, W., Stansbury, C., & Pickard, J. (2022). Deciphering multi-way interactions in the human genome. Nature communications, 13(1), 1-15. 
 
 
@@ -76,4 +64,3 @@ In order to filter the artifacts caused by random links and other factors, and t
 ### Target region check
 
 ### Correlation with high-quality Hi-C
-
