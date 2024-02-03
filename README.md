@@ -339,22 +339,23 @@ This is a bedtools-liked function, can annotate multi-contacts using multiple ge
     java -cp ${jar_path} utils.ExtractGaps <original.fastq> <gaps.fastq> <coverageFile> <minLength>(default 50)
 
 ## ".contacts" file format <a name="contacts-file-format"></a>
-| Col 列号 | Field 字段 |Description 含义|示例|
+| Col | Field  |Description |Example|
 | :---: | :---: | --- |---|
-|1|chr|染色体id(String)|chr1|
-|2|start|基因组上的起始位置(Number)|1000000|
-|3|end|基因组上的终止位置(Number)|1003000|
+|1|chr|Chromosome name(String)|chr1|
+|2|start|Genomic start(Integer)|1000000|
+|3|end|Genomic end(Integer)|1003000|
 |4|readID|reads id(String)|SRR11589402.5|
-|5|readStart|reads上的起始位置(Number)|0|
-|6|readEnd|reads上的终止位置(Number)|2900|
-|7|readLength|reads长度(Number)|4000|
-|8|score|mapq&AS(String)|60:2600|
-|9|strand|strand(String)|+|
-|10|mappingId|mappings id(Number)|100|
-|11|status|mappings status(String)|passed|
-|12|fragmentAssigned|匹配到的酶切片段|chr8-100890013-100890075,6903240:chr8-100890075-100890232|
+|5|readStart|Read start(Integer)|0|
+|6|readEnd|Read end(Integer)|2900|
+|7|readLength|Read length(Integer)|4000|
+|8|score|mapq&AS score(String)|60:2600|
+|9|strand|Strand ID (String)|+|
+|10|mappingId|Mapping record id(Integer)|100|
+|11|status|Status(String)|passed|
+|12|fragmentAssigned|Fragments assigned|chr8-100890013-100890075,6903240:chr8-100890075-100890232|
 
     #chr, start, end, readID, readStart, readEnd, readLength, mapq:AS, strand, mapping id, status, (optional)fragment information
+    
     ## simple
     chr12   92770602        92770829        SRR11589402.5   1237    1467    1517    15:1012      -       0   passed  chr12-100890013-100890075
 
