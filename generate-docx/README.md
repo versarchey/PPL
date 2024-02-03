@@ -58,6 +58,11 @@ Our test environment is on Windows Subsystem Linux Ubuntu.
     -p SRR11589404_800k.fq \ #prefix 
     -o SRR11589404_800k.fq.docx #outputfile name
 
+## About "Boundary check"
+
+<img src="https://github.com/versarchey/PPL-Toolbox/blob/main/generate-docx/figs/boundary.png" width="80%">
+
+PPL can calculate the distance of the edges of the mapping records from the nearest enzyme identified site and plot their distribution (referred to as boundary check). We define two types of distances computation method, referred to as BOTH and CLOSER distances, and this figure explains the calculation of these two methods and gives examples. BOTH distances react to the average distance between the two ends. However, considering that there are cases of "seqencing breakage" in nanopore sequencing, such as the occurrence of "plugging pore" events, we introduced the closer distance. The closer distance is insensitive to the "breakage" event, and can better represent the accuracy of mapping position.
 
 
 
