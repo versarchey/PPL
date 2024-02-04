@@ -22,11 +22,11 @@ PPL (<b>P</b>ore-C <b>P</b>ip<b>L</b>ine) is a set of tools to process, evaluate
   - [Denoise multi-contacts by hypergraph filtering](#denoise-multi-contacts-by-hypergraph-filtering)
   - [Haplo-tagging contacts by phased SNPs (only for diploid organism until now)](#haplo-tagging-contacts-by-phased-snps-only-for-diploid-organism-until-now)
   - [Visualization class for multi-way contacts](#visualization-class-for-multi-way-contacts)
-  - [Deduplicate PCR amplicons (Only for single-cell experiments using PCR, such as scNanoHi-C)](#deduplicate-pcr-amplicons-only-for-single-cell-experiments-using-pcr-such-as-scnanohi-c)
+  - [Deduplicate PCR amplicons (only for single-cell experiments using PCR, such as scNanoHi-C)](#deduplicate-pcr-amplicons-only-for-single-cell-experiments-using-pcr-such-as-scnanohi-c)
   - [Multi-way Contacts Annotation](#multi-way-contacts-annotation)
   - [Convert Format](#convert-format)
   - [Other Functions](#other-functions)
-## [".contacts" file format](#contacts-file-format)
+- [".contacts" file format](#contacts-file-format)
 
 
 
@@ -152,7 +152,7 @@ Detailed introduction: [/Extract/README.md](https://github.com/versarchey/PPL-To
         --skipmap N \
         --prefix $id \
         --start_step 2 \
-        --start_step 3 \ # look here, step4-7 is made for  
+        --stop_step 3 \ # look here, step4-7 is made for  
         --restrictionsiteFile ${res_d} \
         --thread 12
 
