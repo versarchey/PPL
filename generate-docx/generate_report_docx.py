@@ -172,10 +172,17 @@ document.add_picture(prefix+".p1"+suffix, width=Inches(5))
 document.add_paragraph('Figure 12. Normalised penalty score.', style="My_Caption")
 document.add_picture(prefix+".p2"+suffix, width=Inches(4))
 document.add_paragraph('Figure 13. Normalised penalty score. Same to Fig 12, just presented by violin plot.', style="My_Caption")
+document.add_heading('6. Pore clogging check', level=1)
+p = document.add_paragraph('Please note: The ratio of CLOSER distance to BOTH distance is used to evaluate pore-clogging. Because BOTH distance is influenced by clogging, but CLOSER is not. Therefore, the lower ratio, the better quality.')
+document.add_picture(prefix+".bc3"+suffix, width=Inches(4))
+document.add_paragraph('Figure 14. Distribuion of boundary distance ratio. ', style="My_Caption")
+
 
 document.add_heading('', level=1)
 document.add_paragraph('Code Accessibility: https://github.com/versarchey/PPL', style='Intense Quote')
 document.add_paragraph('Powered by python-docx', style='Intense Quote')
+
+
 
 ####
 
